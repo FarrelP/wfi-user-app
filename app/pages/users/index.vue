@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-7xl mx-auto p-4">
     <div
-      class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8"
+      class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 bg-white/80 rounded-xl p-6 shadow"
     >
       <div>
         <h1 class="text-2xl font-bold text-gray-800">User Management</h1>
@@ -12,7 +12,7 @@
 
       <button
         @click="isModalOpen = true"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium shadow-sm flex items-center gap-2"
+        class="bg-blue-600 hover:bg-blue-700 active:scale-95 transition-transform duration-150 text-white px-5 py-2.5 rounded-lg font-medium shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
       >
         <span class="text-xl">+</span>
         Add New User
@@ -43,9 +43,11 @@
 
     <div
       v-if="!store.isFetching && users.length === 0"
-      class="p-12 text-center text-gray-500 bg-white rounded-xl border border-gray-200 mt-4"
+      class="p-12 text-center text-gray-500 bg-gradient-to-br from-white to-blue-100 rounded-xl border-2 border-dashed border-blue-200 mt-4 shadow-inner animate-fadeIn"
     >
-      No users found matching your criteria.
+      <svg class="mx-auto mb-4 w-12 h-12 text-blue-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-3A2.25 2.25 0 008.25 5.25V9m11.25 3v6.75A2.25 2.25 0 0117.25 21H6.75A2.25 2.25 0 014.5 18.75V12m16.5 0V9.75A2.25 2.25 0 0018.75 7.5H5.25A2.25 2.25 0 003 9.75V12m18 0H3"/></svg>
+      <span class="block font-semibold text-blue-500 mb-1">No users found</span>
+      <span class="block text-gray-500">Try adjusting your filters or add a new user.</span>
     </div>
 
     <UserPagination
