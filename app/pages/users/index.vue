@@ -121,7 +121,7 @@ const updateQuery = (patch: Partial<UsersQuery>) => {
 };
 
 const setPage = (page: number) => updateQuery({ page });
-const setLimit = (limit: number) => updateQuery({ limit });
+const setLimit = (limit: number) => updateQuery({ limit, page: 1 });
 
 const handleEdit = (user: User) => {
   selectedUserForEdit.value = user;

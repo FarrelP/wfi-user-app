@@ -1,13 +1,17 @@
-<script setup>
-import { ref, watch } from "vue";
-import { useUsersQuery } from "~/composables/useUsersQuery";
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { useUsersQuery } from '~/composables/useUsersQuery'
 
-const query = useUsersQuery();
+type SortOrder = 'asc' | 'desc'
+type SortBy = '' | 'name' | 'age'
+type Role = '' | 'admin' | 'moderator' | 'user'
 
-const localSearch = ref("");
-const localRole = ref("");
-const localSortBy = ref("");
-const localOrder = ref("asc");
+const query = useUsersQuery()
+
+const localSearch = ref<string>('')
+const localRole = ref<Role>('')
+const localSortBy = ref<SortBy>('')
+const localOrder = ref<SortOrder>('asc')
 
 watch(
   () => ({
@@ -17,35 +21,35 @@ watch(
     order: query.order.value,
   }),
   (val) => {
-    localSearch.value = val.search;
-    localRole.value = val.role;
-    localSortBy.value = val.sortBy;
-    localOrder.value = val.order || "asc";
+    localSearch.value = val.search
+    localRole.value = (val.role as Role) ?? 'user'
+    localSortBy.value = (val.sortBy as SortBy) ?? 'name'
+    localOrder.value = (val.order as SortOrder) ?? 'asc'
   },
-  { immediate: true },
-);
+  { immediate: true }
+)
 
-const applyFilters = () => {
-  query.setSearch(localSearch.value);
-  query.setRole(localRole.value);
+const applyFilters = (): void => {
+  query.setSearch(localSearch.value)
+  query.setRole(localRole.value)
 
   if (localSortBy.value) {
-    query.setSort(localSortBy.value, localOrder.value);
+    query.setSort(localSortBy.value, localOrder.value)
   } else {
-    query.resetSort();
+    query.resetSort()
   }
-};
+}
 
-const resetFilters = () => {
-  localSearch.value = "";
-  localRole.value = "";
-  localSortBy.value = "";
-  localOrder.value = "asc";
+const resetFilters = (): void => {
+  localSearch.value = ''
+  localRole.value = ''
+  localSortBy.value = ''
+  localOrder.value = 'asc'
 
-  query.setSearch("");
-  query.setRole("");
-  query.resetSort();
-};
+  query.setSearch('')
+  query.setRole('')
+  query.resetSort()
+}
 </script>
 
 <template>
